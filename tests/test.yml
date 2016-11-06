@@ -2,4 +2,4 @@
 - hosts: servers
   remote_user: root
   roles:
-  - ousmane.namedmanager-dns
+  - ousmane-namedmanager-dns
