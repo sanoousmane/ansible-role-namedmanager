@@ -1,7 +1,8 @@
 Namedmanager
 =========
 
-This role installs and configures the namedmanager. 
+This role installs and configures the namedmanager.
+ 
 NamedManager is an AGPL web-based DNS management system designed to make the adding, adjusting and removal of zones/records easy and reliable.
 
 Rather than attempting to develop a new nameserver as in the case of many DNS management interfaces, NamedManager supports the tried and tested Bind nameserver, by generating Bind compatible configuration files whenever a change needs to be applied.
@@ -25,13 +26,15 @@ Role Variables
 
 The variables that can be passed to this role and a brief description about them are as follows.
 
-# Primary nameserver
+
 masternode: ns01.sanogo.net
-# Secondary nameserver
+
 othernode: ns02.sanogo.net 
-#  Port to open
+
 dns: 53
+
 http: 80
+
 https: 443                
 
 
