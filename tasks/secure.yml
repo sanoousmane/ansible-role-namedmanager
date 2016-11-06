@@ -1,0 +1,18 @@
+- name: Removing test default database
+  mysql_db:
+    name: test
+    state: absent
+
+- name: Disabling remote access for root
+  mysql_user:
+    name: root
+    host: "{{ item }}"
+  with_items:
+    - 'localhost'
+    - '127.0.0.1'
+    - '::1'
+
+- name: Disabling anonymous access
+  mysql_user:
+    name: ""
+    state: absent

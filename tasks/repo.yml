@@ -1,0 +1,14 @@
+- name: add mysql repodata
+  copy: src=mysql-community.repo dest=/etc/yum.repos.d/mysql-community.repo group=root owner=root mode=0644
+
+- name: add mysql repodata source
+  copy: src=mysql-community-source.repo dest=/etc/yum.repos.d/mysql-community-source.repo group=root owner=root mode=0644
+
+- name: add namedmanager repodata
+  copy: src=jethrocarr-c7-public.repo dest=/etc/yum.repos.d/jethrocarr-c7-public.repo group=root owner=root mode=0644
+
+- name: import RPM-GPG-KEY-mysql
+  command: rpm --import http://repo.mysql.com/RPM-GPG-KEY-mysql
+
+- name: import jethrocarr_signing_key
+  command: rpm --import http://repos.jethrocarr.com/jethrocarr_signing_key.gpg

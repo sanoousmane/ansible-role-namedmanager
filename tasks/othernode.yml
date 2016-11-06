@@ -1,0 +1,52 @@
+
+- name: Uprage cache 
+  yum: name=* state=latest
+
+- name: Install packages On others nodes
+  yum: name={{ item }} state=present update_cache=yes
+  with_items:
+    - firewalld
+    - namedmanager-bind
+    - bind-chroot
+ 
+- name: setup-named-chroot
+  command: "/usr/libexec/setup-named-chroot.sh /var/named/chroot on"
+  
+- name: copy named.conf file in /var/named/chroot/etc/
+  file: src=named.conf dest=/var/named/chroot/etc/named.conf owner=root group=named mode=644
+
+- name: copy named.namedmanager.conf file in /var/named/chroot/etc/
+  file: path=/var/named/chroot/etc/named.namedmanager.conf owner=named group=named mode=644
+
+- name: touch file namedmanager_messages in /var/log
+  file: path=/var/log/namedmanager_messages state=touch group=named
+
+
+- name: Start Service firewalld
+  service: name={{ item }} state=started
+  with_items:
+    - firewalld
+
+- name: enable Service firewalld
+  service: name={{ item }} enabled=yes
+  with_items:
+    - firewalld
+
+- name: firewalld rules
+  firewalld:
+    port={{ item }}
+    permanent=true
+    state=enabled
+    immediate=true
+  with_items:
+    - "{{ dns }}/tcp"
+    - "{{ dns }}/udp"
+
+- name: add config-bind.php file
+  template: src=config-bind.php.j2 dest=/etc/namedmanager/config-bind.php group=root owner=root mode=0644
+
+- name: Start Service named-chroot
+  service: name=named-chroot state=started
+
+
+

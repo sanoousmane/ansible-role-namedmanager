@@ -1,0 +1,45 @@
+# CentOS / RHEL 7 Repositories
+#
+# www.jethrocarr.com
+#
+
+
+# Packages of third party software that extend the OS and won't replace any
+# standard OS or EPEL packages. Generally these are always safe to install
+# since they won't override anything else that is present on a system if you're
+# only using stock repos.
+#
+# Some of these packages may require packages in jethrocarr-updates.
+
+[jethrocarr-os]
+name=jethrocarr-os
+baseurl=https://repos.jethrocarr.com/pub/jethrocarr/linux/centos/7/jethrocarr-os/$basearch/
+gpgcheck=1
+gpgkey=https://repos.jethrocarr.com/jethrocarr_signing_key.gpg
+enabled=1
+
+
+# Provides upgrades to packages included in the distribution (eg: PHP or the
+# kernel). These packages could potentially break other applications you have
+# installed onto your computer. Some of these packages may require packages
+# in jethrocarr-os.	
+
+[jethrocarr-updates]
+name=jethrocarr-updates
+baseurl=https://repos.jethrocarr.com/pub/jethrocarr/linux/centos/7/jethrocarr-updates/$basearch/
+gpgcheck=1
+gpgkey=https://repos.jethrocarr.com/jethrocarr_signing_key.gpg
+enabled=1
+
+
+# All RPMs developed by Jethro Carr are located in this repository. Some of
+# these programs may require packages in jethrocarr-os or jethrocarr-updates
+# in order to install and run
+
+[jethrocarr-custom]
+name=jethrocarr-custom
+baseurl=https://repos.jethrocarr.com/pub/jethrocarr/linux/centos/7/jethrocarr-custom/$basearch/
+gpgcheck=1
+gpgkey=https://repos.jethrocarr.com/jethrocarr_signing_key.gpg
+enabled=1
+

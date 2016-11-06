@@ -1,0 +1,10 @@
+---
+
+- include: repo.yml
+- include: master.yml
+  when: inventory_hostname == masternode
+- include: othernode.yml
+  when: inventory_hostname == othernode
+
+- include: secure.yml
+  when: inventory_hostname == masternode

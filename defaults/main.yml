@@ -1,0 +1,8 @@
+---
+
+dns: 53
+http: 80
+https: 443
+mariadb_root_password: Nzk2ODI4OWFmYjk3MzAw
+masternode: ns01.sanogo.net
+othernode:  ns02.sanogo.net
