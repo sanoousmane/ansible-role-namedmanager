@@ -11,7 +11,7 @@ galaxy_info:
    - name: Fedora
      versions:
       - 18
-  categories:
+  galaxy_tags:
    - system
    - networking
    - dns
