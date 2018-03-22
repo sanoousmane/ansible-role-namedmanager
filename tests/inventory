@@ -1,1 +1,3 @@
-servers
+[servers]
+ns01.sanogo.net		ansible_ssh_user="root"
+ns02.sanogo.net		ansible_ssh_user="root"

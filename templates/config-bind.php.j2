@@ -11,7 +11,7 @@
 /*
 	API Configuration
 */
-$config["api_url"]		= "http://{{ ansible_eth0.ipv4.address }}/namedmanager";	// Application Install Location
+$config["api_url"]		= "http://{{ masterIP }}/namedmanager";	// Application Install Location
 $config["api_server_name"]	= "{{ ansible_fqdn }}";	     // Name of the DNS server (important: part of the authentication process)
 $config["api_auth_key"]		= "ZWIzMTdlZDc3YTRjYWEw";					// API authentication key
 

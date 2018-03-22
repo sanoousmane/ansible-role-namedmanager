@@ -37,6 +37,7 @@ http: 80
 
 https: 443                
 
+You can login with the default username/password of setup/setup123 at http://localhost/namedmanager
 
 Dependencies
 ------------
@@ -48,7 +49,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - ousmane.namedmanager-dns
+         - ansible-role-namedmanager
 
 License
 -------

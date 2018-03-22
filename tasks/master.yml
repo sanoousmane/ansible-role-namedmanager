@@ -1,8 +1,8 @@
 
-- name: Uprage cache 
+- name: MasterNode### Uprage cache 
   yum: name=* state=latest
 
-- name: Install packages On master node
+- name: MasterNode### Install packages On master node
   yum: name={{ item }} state=present update_cache=yes
   with_items:
     - httpd
@@ -26,37 +26,37 @@
     - firewalld
     - namedmanager-www
     - namedmanager-bind
+    - vim
+    - bind-utils
 
-- name: setup-named-chroot
+- name: MasterNode### setup-named-chroot
   command: "/usr/libexec/setup-named-chroot.sh /var/named/chroot on"
 
-- name: copy named.conf file in /var/named/chroot/etc/
-  file: src=named.conf dest=/var/named/chroot/etc/named.conf owner=root group=named mode=644
+- name: MasterNode### copy named.conf file in /var/named/chroot/etc/
+  file: src=named.conf dest=/var/named/chroot/etc/named.conf owner=root group=named mode=644 state=touch
+  tags: toto
 
-- name: copy named.conf file in /var/named/chroot/etc/
-  file: path=/var/named/chroot/etc/named.namedmanager.conf owner=named group=named mode=644
+- name: MasterNode### TOTOTO
+  lineinfile: dest=/var/named/chroot/etc/named.conf regexp='' insertafter=EOF line="include "/etc/named.namedmanager.conf";"
+  tags: toto
+
+- name: MasterNode### create named.namedmanager.conf file in /var/named/chroot/etc/
+  file: path=/var/named/chroot/etc/named.namedmanager.conf state=touch owner=named group=named mode=644
   
-- name: touch file namedmanager_messages
+- name: MasterNode### touch file namedmanager_messages
   file: path=/var/log/namedmanager_messages state=touch group=named
 
-- name: Start Service httpd and Mysql
-  service: name={{ item }} state=started
+- name: MasterNode### Start and Enable Service httpd and Mysql
+  service: name={{ item }} state=started enabled=yes
   with_items:
     - httpd
     - mysqld
     - firewalld
 
-- name: enable Service httpd and Mysql
-  service: name={{ item }} enabled=yes
-  with_items:
-    - httpd
-    - mysqld
-    - firewalld
-
-- name: add servername in httpd.conf
+- name: MasterNode### add servername in httpd.conf
   lineinfile: dest=/etc/httpd/conf/httpd.conf regexp=^#ServerName line="ServerName {{ ansible_fqdn }}:80"
 
-- name: MySQL firewalld rules
+- name: MasterNode### MySQL firewalld rules
   firewalld:
     port={{ item }}
     permanent=true
@@ -68,38 +68,40 @@
     - "{{ http }}/tcp"
     - "{{ https }}/tcp"
 
-- name: Set root password for localhost
+- name: MasterNode### Set root password for localhost
   mysql_user:
     name=root
     password={{ mariadb_root_password }}
     host=localhost
     state=present
 
-- name: Creating the /root/.my.cnf file
+- name: MasterNode### Creating the /root/.my.cnf file
   template:
     src=my.cnf.j2
     dest=/root/.my.cnf
     mode=0640
 
-- name: add conf-bind.php file
+- name: MasterNode### add conf-bind.php file
   template: src=config-bind.php.j2 dest=/etc/namedmanager/config-bind.php group=root owner=root mode=0644
 
-- name: add namedmanager.conf file
+- name: MasterNode### add namedmanager.conf file
   template: src=namedmanager.conf.j2 dest=/etc/httpd/conf.d/namedmanager.conf group=root owner=root mode=0644
 
-- name: add autoinstall file
+- name: MasterNode### add autoinstall file
   template: src=autoinstall.pl.j2 dest=/usr/share/namedmanager/resources/autoinstall.pl group=root owner=root mode=0755
 
-- name: bd installation
+- name: MasterNode### bd installation
   command: /usr/share/namedmanager/resources/autoinstall.pl
 
-- name: Start Service httpd and Mysql
+- name: MasterNode### Start and Enable Service httpd and Mysql
   service: name=mysqld state=restarted
 
-- name: enable Service httpd and Mysql
-  service: name={{ item }} enabled=yes
-  with_items:
-    - named-chroot
+- name: MasterNode### enable and Enable Service named-chroot
+  service: name=named-chroot state=started enabled=yes
 
-- name: Start Service named-chroot
-  service: name=named-chroot state=started
+
+- name: MasterNode### reStart httpd Service
+  service: name=httpd state=restarted
+
+- name: Othernode### Start and Enable Service namedmanager_logpush
+  service: name=namedmanager_logpush state=started enabled=yes
