@@ -34,11 +34,6 @@
 
 - name: MasterNode### copy named.conf file in /var/named/chroot/etc/
   file: src=named.conf dest=/var/named/chroot/etc/named.conf owner=root group=named mode=644 state=touch
-  tags: toto
-
-- name: MasterNode### TOTOTO
-  lineinfile: dest=/var/named/chroot/etc/named.conf regexp='' insertafter=EOF line="include "/etc/named.namedmanager.conf";"
-  tags: toto
 
 - name: MasterNode### create named.namedmanager.conf file in /var/named/chroot/etc/
   file: path=/var/named/chroot/etc/named.namedmanager.conf state=touch owner=named group=named mode=644
